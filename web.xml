@@ -1,0 +1,10 @@
+<web-app>
+    <servlet>
+        <servlet-name>SubmitReportServlet</servlet-name>
+        <servlet-class>OnlyCans.SubmitReportServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SubmitReportServlet</servlet-name>
+        <url-pattern>/submitReport</url-pattern>
+    </servlet-mapping>
+</web-app>

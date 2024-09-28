@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OnlyCans - Sign Up for Notifications</title>
+    <link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Alegreya Sans', sans-serif;
+            background-color: #B0BEA9;
+            color: #073B3A;
+        }
+        header, footer {
+            background-color: #073B3A;
+            color: #F49FBC;
+            padding: 20px;
+            text-align: center;
+        }
+        nav {
+            background-color: #554348;
+            padding: 10px;
+            text-align: center;
+        }
+        nav a {
+            margin: 0 15px;
+            color: #F49FBC;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        nav a:hover {
+            color: #B0BEA9;
+        }
+        main {
+            padding: 20px;
+            text-align: center;
+        }
+        form {
+            background-color: #4A6C4B;
+            padding: 20px;
+            color: white;
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: left;
+        }
+        input[type="text"], input[type="email"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #073B3A;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Sign Up for Notifications</h1>
+    </header>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="past-reports.html">Past Reports</a>
+        <a href="report.html">Report</a>
+    </nav>
+
+    <main>
+        <form action="/submit-signup" method="post">
+            <label for="name">Full Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <input type="submit" value="Sign Up">
+        </form>
+    </main>
+
+    <footer>
+        <p>© 2024 OnlyCans. All rights reserved.</p>
+    </footer>
+</body>
+</html>

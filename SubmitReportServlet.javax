@@ -1,0 +1,41 @@
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet("/submitReport")
+public class SubmitReportServlet extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+
+    // Simulate a TrashCan storage
+    private static TrashCan trashCan0 = new TrashCan(0, "123 Street, City");
+
+    // Simulate a Waste Management Company
+    private static WasteManagementCompany company1 = new WasteManagementCompany(1, "Waste Management Corp", "contact@wm.com");
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Get user input from the form
+        int userId = Integer.parseInt(request.getParameter("userId"));
+        int trashCanId = Integer.parseInt(request.getParameter("trashCanId"));
+        double fullnessValue = Double.parseDouble(request.getParameter("fullness"));
+
+        // Create a new user for simplicity
+        User user = new User(userId, "John Doe", "john@example.com");  // Using a static name and email
+
+        // Simulate a user report submission
+        Report report = user.submitReport(trashCan0, userId, fullnessValue);
+        trashCan0.addFullnessReport(report.getUserId(), report.getFullnessValue());
+
+        // Check if a notification should be sent
+        NotificationSystem notificationSystem = new NotificationSystem();
+        notificationSystem.checkAndSendNotification(company1, trashCan0);
+
+        // Send response back to the browser
+        response.getWriter().println("<h2>Report submitted successfully!</h2>");
+        response.getWriter().println("<p>Trash Can ID: " + trashCanId + "</p>");
+        response.getWriter().println("<p>Fullness Value: " + fullnessValue + "</p>");
+    }
+}
