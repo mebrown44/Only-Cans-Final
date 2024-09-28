@@ -1,2 +1,2 @@
 # Only-Cans
-SteelHacksIX (2024) project
+SteelHacksIX (2024) Project:
