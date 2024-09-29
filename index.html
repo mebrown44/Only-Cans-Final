@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OnlyCans - Report Trash Can Fullness</title>
     <link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Leaflet.js CSS link-->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
     <style>
         body {
             margin: 0;
@@ -21,7 +25,7 @@
             justify-content: space-between;
         }
         header img {
-            max-width: 120px; 
+            max-width: 120px;
         }
         h1 {
             margin: 0;
@@ -62,17 +66,24 @@
         .blank-space {
             height: 300px;
             background-color: #4A6C4B;
-            margin: 20px 0; /* top and bottom margin is 20px, right and left margin is 0px*/
+            margin: 20px 0; 
         }
         #fact {
             font-style: italic;
-            color: #073B3A; 
+            color: #073B3A;
         }
         #logo {
             max-width: 240px;  
-            height: auto;      /* keep the aspect ratio (looked up online)*/
-            display: block;    /* make sure behaves like a block element (looked up online)*/
+            height: auto;
+            display: block;
             margin: 0 -15px;
+        }
+
+        /* map container */
+        #map {
+            height: 500px;
+            width: 100%;
+            margin-top: 20px;
         }
     </style>
 </head>
@@ -84,7 +95,7 @@
     </header>
 
     <div id="slider">
-        <p id="fact" style="font-style: italic;">Fact 1: Recycling one ton of paper can save 17 trees.</p>
+        <p id="fact">Fact 1: Recycling one ton of paper can save 17 trees.</p>
     </div>
 
     <nav>
@@ -92,19 +103,73 @@
         <a href="past-reports.html">Past Reports</a>
         <a href="signup.html">Sign Up for Notifications</a>
         <a href="report.html">Report</a>
-        <a href="index.html">Home</a>
     </nav>
 
     <main>
-        <div class="blank-space"></div>
+        <h2>Interactive Trash & Recycling Map</h2>
+        <p>Hover over the blue and green pinpoints to get more information about trash cans and recycling bins near you.</p>
+
+        <!-- map container -->
+        <div id="map"></div>
     </main>
 
     <footer>
         <p>© 2024 OnlyCans. All rights reserved.</p>
     </footer>
-    <!--in javascript (looked up online)-->
+
+    <!-- Leaflet.js CDN -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+    <!-- map and markers -->
     <script>
-        //array of facts
+        //initializing the map for Pittsburgh area
+        var map = L.map('map').setView([40.4456945, -79.9626408], 13); 
+
+        //adding OpenStreetMap tiles (looked up online)
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        //marker icons for trash and recycling bins
+        var blueIcon = L.icon({
+            iconUrl: 'blue-marker.png',  
+            iconSize: [25,41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34]
+        });
+
+        var greenIcon = L.icon({
+            iconUrl: 'green-marker.png',  
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34]
+        });
+
+        //our data points with trash and recycling locations
+        var locations = [
+        { lat: 40.4456945, lon: -79.9626408, recycle: false, img: 'Trash Cans/1.jpeg', id: 1 },
+        //add more
+        ];
+
+        //looping through locations and add markers (looked up online)
+        locations.forEach(function(location) {
+        var marker = L.marker([location.lat, location.lon], {
+        icon: location.recycle ? greenIcon : blueIcon  
+        }).addTo(map);
+
+        //adding pop-up with image, details, and link to report the trash can (looked up online)
+        marker.bindPopup(
+        `<b>Trash Can #${location.id}</b><br>
+        <img src="${location.img}" alt="Image" style="width:100px;height:auto;"><br>
+        Recycle: ${location.recycle ? 'Yes' : 'No'}<br>
+        <a href="report.html" style="color:blue;text-decoration:underline;">Report This Can</a>`
+        );
+    });
+
+    </script>
+
+    <!-- slideshow for facts -->
+    <script>
         const facts = [
             "Fact 1: Recycling one ton of paper can save 17 trees.",
             "Fact 2: Glass can be recycled endlessly without loss of quality.",
@@ -112,17 +177,15 @@
             "Fact 4: Recycling plastic reduces energy consumption by 66%.",
             "Fact 5: One recycled tin can would save enough energy to power a TV for three hours."
         ];
-        //initializes the variable currentFact to keep track of the current fact
+
         let currentFact = 0;
-        //function to show next fact
+
         function showNextFact() {
-            //incrementing the current fact by 1, and then wrapping around to the first fact with % (looked up online)
             currentFact = (currentFact + 1) % facts.length;
-            //updating the text content of an HTML element with the ID fact to show the current fact (looked up online)
             document.getElementById("fact").textContent = facts[currentFact];
         }
-        //setting an interval to show the next fact after 3 seconds (looked up online)
-        setInterval(showNextFact, 3000); 
+
+        setInterval(showNextFact, 3000);
     </script>
 
 </body>
