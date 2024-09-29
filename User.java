@@ -5,7 +5,7 @@ public class User {
 
     //constructor for initializing a User object
     public User(int userId, String name, String email) {
-        this.userId = userId;
+        this.userId = userId; //Do we need this
         this.name = name;
         this.email = email;
     }

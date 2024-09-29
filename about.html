@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8"> <!-- importing the standard unicode that can represent almost every character (looked up online)-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- makes visible on mobile devices (looked up online) -->
+
     <title>OnlyCans - About Us</title>
     <link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -16,7 +17,16 @@
             background-color: #073B3A;
             color: #F49FBC;
             padding: 20px;
-            text-align: center;
+        }
+        header {
+            display: flex;
+            align-items: center;
+        }
+        header img {
+            max-width: 200px;
+        }
+        h1 {
+            margin: 0 800px; 
         }
         nav {
             background-color: #554348;
@@ -38,14 +48,14 @@
         }
         .content {
             max-width: 800px;
-            margin: 0 auto;
-            text-align: left;
+            margin: 0 auto; /* centers the content (looked up online) */
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>About OnlyCans</h1>
+        <img src="TheOnlyCans Logo.png" alt="OnlyCans Logo">
+        <h1>About OnlyCans</h1>       
     </header>
 
     <nav>
@@ -69,7 +79,7 @@
     </main>
 
     <footer>
-        <p>© 2024 OnlyCans. All rights reserved.</p>
+        <p>© 2024 OnlyCans. All rights reserved.</p> <!-- p is a paragraph -->
     </footer>
 </body>
 </html>

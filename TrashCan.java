@@ -3,6 +3,7 @@ import java.util.List;
 
 public class TrashCan {
     private int trashCanId;
+    private static int ID = 0;
     private String location;
     //to track the users reporting a specific trash can
     private List<Integer> reportedUsers;  
@@ -10,8 +11,9 @@ public class TrashCan {
     private List<Double> fullnessValues;  
 
     //constructor to initialize TrashCan object with a id and location
-    public TrashCan(int trashCanId, String location) {
-        this.trashCanId = trashCanId;
+    public TrashCan(String location) {
+        this.trashCanId = ID;
+        ID++;
         this.location = location;
         this.reportedUsers = new ArrayList<>();
         //initialize a empty list for fullness values

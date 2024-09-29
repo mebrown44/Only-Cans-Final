@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OnlyCans - Sign Up for Notifications</title>
+    <title>Sign Up for Notifications - OnlyCans</title>
     <link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -12,11 +12,15 @@
             background-color: #B0BEA9;
             color: #073B3A;
         }
-        header, footer {
+        header {
             background-color: #073B3A;
             color: #F49FBC;
             padding: 20px;
             text-align: center;
+        }
+        header img {
+            max-width: 150px;
+            float: left;
         }
         nav {
             background-color: #554348;
@@ -29,9 +33,6 @@
             text-decoration: none;
             font-weight: bold;
         }
-        nav a:hover {
-            color: #B0BEA9;
-        }
         main {
             padding: 20px;
             text-align: center;
@@ -39,45 +40,61 @@
         form {
             background-color: #4A6C4B;
             padding: 20px;
-            color: white;
-            max-width: 600px;
-            margin: 0 auto;
+            border-radius: 10px;
+            display: inline-block;
             text-align: left;
-        }
-        input[type="text"], input[type="email"] {
             width: 100%;
-            padding: 10px;
-            margin: 10px 0;
+            max-width: 500px;
+            margin: 0 auto;
         }
-        input[type="submit"] {
-            padding: 10px 20px;
+        form input[type="text"], 
+        form input[type="email"] {
+            width: 95%;               
+            padding: 15px;             
+            margin: 10px 0;            
+            border-radius: 8px;        
+            border: 1px solid #073B3A; 
+            font-size: 1.1em;          
+        }
+        form input[type="submit"] {
+            width: 100%;
+            padding: 15px;
+            margin-top: 10px;
             background-color: #073B3A;
-            color: white;
+            color: #F49FBC;
             border: none;
+            border-radius: 8px;
+            font-size: 1.2em;
             cursor: pointer;
+        }
+        footer {
+            background-color: #073B3A;
+            color: #F49FBC;
+            padding: 10px;
+            text-align: center;
         }
     </style>
 </head>
 <body>
+
     <header>
+        <img src="TheOnlyCans Logo.png" alt="OnlyCans Logo">
         <h1>Sign Up for Notifications</h1>
     </header>
 
     <nav>
-        <a href="index.html">Home</a>
         <a href="about.html">About Us</a>
         <a href="past-reports.html">Past Reports</a>
+        <a href="signup.html">Sign Up for Notifications</a>
         <a href="report.html">Report</a>
+        <a href="index.html">Home</a>
     </nav>
 
     <main>
-        <form action="/submit-signup" method="post">
-            <label for="name">Full Name:</label>
-            <input type="text" id="name" name="name" required>
-
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-
+        <h2>Sign Up for Notifications</h2>
+        <form action="thank-you-signup.html" method="post">
+            <input type="text" name="name" placeholder="Your Name" required>
+            <input type="email" name="email" placeholder="Your Email" required>
             <input type="submit" value="Sign Up">
         </form>
     </main>
@@ -85,5 +102,6 @@
     <footer>
         <p>© 2024 OnlyCans. All rights reserved.</p>
     </footer>
+
 </body>
 </html>

@@ -9,25 +9,30 @@
         body {
             margin: 0;
             font-family: 'Alegreya Sans', sans-serif;
-            background-color: #B0BEA9; /* Light background color */
-            color: #073B3A; /* Dark text */
+            background-color: #B0BEA9; 
+            color: #073B3A; 
         }
         header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
             background-color: #073B3A;
             color: #F49FBC;
             padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
         header img {
-            height: 150px; /* Increase the size of the logo */
-            width: auto;
+            max-width: 120px; 
         }
         h1 {
-            flex-grow: 1;
+            margin: 0;
+            font-size: 1.6em;
+        }
+        #slider {
+            background-color: #4A6C4B; 
+            color: white;
+            padding: 20px;
             text-align: center;
-            margin-left: -150px; /* Move text slightly left to balance */
+            font-size: 1.2em;
         }
         nav {
             background-color: #554348;
@@ -35,7 +40,7 @@
             text-align: center;
         }
         nav a {
-            margin: 0 15px;
+            margin: 0 15px; 
             color: #F49FBC;
             text-decoration: none;
             font-weight: bold;
@@ -57,16 +62,30 @@
         .blank-space {
             height: 300px;
             background-color: #4A6C4B;
-            margin: 20px 0;
+            margin: 20px 0; /* top and bottom margin is 20px, right and left margin is 0px*/
+        }
+        #fact {
+            font-style: italic;
+            color: #073B3A; 
+        }
+        #logo {
+            max-width: 240px;  
+            height: auto;      /* keep the aspect ratio (looked up online)*/
+            display: block;    /* make sure behaves like a block element (looked up online)*/
+            margin: 0 -15px;
         }
     </style>
 </head>
 <body>
 
     <header>
-        <img src="TheOnlyCans Logo.png" alt="OnlyCans Logo">
+        <img src="TheOnlyCans Logo.png" alt="OnlyCans Logo" id="logo">
         <h1>Report Trash Can Fullness</h1>
     </header>
+
+    <div id="slider">
+        <p id="fact" style="font-style: italic;">Fact 1: Recycling one ton of paper can save 17 trees.</p>
+    </div>
 
     <nav>
         <a href="about.html">About Us</a>
@@ -83,6 +102,28 @@
     <footer>
         <p>© 2024 OnlyCans. All rights reserved.</p>
     </footer>
+    <!--in javascript (looked up online)-->
+    <script>
+        //array of facts
+        const facts = [
+            "Fact 1: Recycling one ton of paper can save 17 trees.",
+            "Fact 2: Glass can be recycled endlessly without loss of quality.",
+            "Fact 3: Aluminum cans can be recycled and back on the shelf within 60 days.",
+            "Fact 4: Recycling plastic reduces energy consumption by 66%.",
+            "Fact 5: One recycled tin can would save enough energy to power a TV for three hours."
+        ];
+        //initializes the variable currentFact to keep track of the current fact
+        let currentFact = 0;
+        //function to show next fact
+        function showNextFact() {
+            //incrementing the current fact by 1, and then wrapping around to the first fact with % (looked up online)
+            currentFact = (currentFact + 1) % facts.length;
+            //updating the text content of an HTML element with the ID fact to show the current fact (looked up online)
+            document.getElementById("fact").textContent = facts[currentFact];
+        }
+        //setting an interval to show the next fact after 3 seconds (looked up online)
+        setInterval(showNextFact, 3000); 
+    </script>
 
 </body>
 </html>

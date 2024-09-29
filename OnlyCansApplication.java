@@ -3,7 +3,7 @@ public class OnlyCansApplication {
     //running the program here
     public static void main(String[] args) {
         //initializing a trash can with ID 0
-        TrashCan trashCan0 = new TrashCan(0, "123 Street, City");
+        TrashCan trashCan0 = new TrashCan("123 Street, City");
 
         //creating users who will submit reports
         User user1 = new User(1, "Gina Agabegi", "gma61@pitt.edu");
