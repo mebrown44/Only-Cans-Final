@@ -1,20 +1,41 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.io.*;
 
 public class TrashCan {
-    private int trashCanId;
+    private String trashCanId;
     private static int ID = 0;
-    private String location;
+    private double[] loc;
+    private ArrayList<Populate> descriptions;
     //to track the users reporting a specific trash can
     private List<Integer> reportedUsers;  
     //to track fullness values of the trash cans reported by the users
     private List<Double> fullnessValues;  
 
     //constructor to initialize TrashCan object with a id and location
-    public TrashCan(String location) {
-        this.trashCanId = ID;
+    public TrashCan() {
         ID++;
-        this.location = location;
+
+        trashCanId = "Trash Can #";
+        if(descriptions.get(ID).recycle)
+            trashCanId = "Recycling Bin #";
+
+        for(int i = 0; i < descriptions.size(); i++){
+            if(i < 1000)
+                trashCanId += "0";
+
+            if(i < 100)
+                trashCanId += "0";
+
+            if(i < 10)
+                trashCanId += "0";
+        }
+        this.trashCanId += ID;
+        
+
+        loc = new double[2];
+        loc[0] = descriptions.get(ID).longitude;
+        loc[1] = descriptions.get(ID).latitude;
+
         this.reportedUsers = new ArrayList<>();
         //initialize a empty list for fullness values
         this.fullnessValues = new ArrayList<>();  
@@ -52,11 +73,55 @@ public class TrashCan {
     }
 
     //getters
-    public int getTrashCanId() {
+    public String getTrashCanId() {
         return trashCanId;
     }
 
+    public String getImageName(){
+        return "Trash Cans/" + descriptions.get(ID).image;
+    }
+
+    public boolean getRecycle(){
+        return descriptions.get(ID).recycle;
+    }
+
     public String getLocation() {
-        return location;
+        return "(" + loc[0] + ", " + loc[1] + ")";
+    } 
+
+
+    private class Populate{
+        private double longitude;
+        private double latitude;
+        private String image;
+        private boolean recycle;
+
+        private Populate(){
+            String fileName = "TrashFile.txt";
+
+                Scanner inFile = null;
+
+                try{
+                    inFile = new Scanner(new File(fileName));
+                }catch(FileNotFoundException e) {
+                    System.exit(-1);
+                }
+
+                while(inFile.hasNextLine()){
+                    longitude = inFile.nextDouble();
+                    latitude = inFile.nextDouble();
+                    image = inFile.nextLine();
+                    
+                    String temp = inFile.nextLine();
+                    if(temp.equals("T"))
+                        recycle = true;
+                    else
+                        recycle = false;
+
+                    inFile.nextLine();
+
+                }
+        }
+
     }
 }
