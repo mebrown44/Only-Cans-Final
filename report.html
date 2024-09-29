@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Trash Can Fullness</title>
+    <link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Alegreya Sans', sans-serif;
+            background-color: #B0BEA9; 
+            color: #073B3A; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        header, footer {
+            background-color: #122121;
+            color: #F49FBC;
+            padding: 20px;
+            width: 100%;
+            text-align: center;
+        }
+        header img {
+            max-width: 200px; /* adjusting logo size */
+            margin-bottom: 10px; 
+            float: left;
+        }
+        nav {
+            background-color: #554348;
+            padding: 10px;
+            text-align: center;
+            width: 100%;
+        }
+        nav a {
+            margin: 0 15px;
+            color: #F49FBC;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        nav a:hover {
+            color: #B0BEA9;
+        }
+        main {
+            padding: 20px;
+            width: 100%;
+            max-width: 600px; /*set a max width for the main content */
+        }
+        /*looked up online*/
+        .report-form {                 
+            align-items: center;         
+            background-color: #073B3A;  
+            padding: 20px;              
+            margin: 0 auto;             
+            width: 100%;                
+            max-width: 400px;     
+            color:#B0BEA9;
+            text-align: center;   
+        }
+        .report-form input[type="text"], 
+        .report-form input[type="number"], 
+        .report-form input[type="submit"] {
+            width: 100%;                
+            padding: 10px;             
+            margin: 10px -10px;            
+            border: none;              
+        }
+        .report-form input[type="submit"] {
+            background-color: #F49FBC;
+            text-align: center;
+            margin: 0 5px; 
+            color: #073B3A;             
+            cursor: pointer;            
+        }
+        h1{
+            margin-left: 900px;
+            font-size: 1.5em;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <img src="TheOnlyCans Logo.png" alt="OnlyCans Logo">
+        <h1>Report Trash Can Fullness</h1>
+    </header>
+
+    <nav>
+        <a href="about.html">About Us</a>
+        <a href="past-reports.html">Past Reports</a>
+        <a href="signup.html">Sign Up for Notifications</a>
+        <a href="index.html">Home</a>
+    </nav>
+
+    <main>
+        <div class="report-form">
+            <h2>Report Fullness of Trash Can</h2>
+            <form action="thank-you-report.html" method="post">
+                <input type="text" name="trashCanId" placeholder="Trash Can ID" required>
+                <input type="number" name="fullnessValue" placeholder="Fullness Value (1-5)" min="1" max="5" required>
+                <input type="submit" value="Submit Report">
+            </form>
+        </div>      
+    </main>
+
+    <footer>
+        <p>© 2024 OnlyCans. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OnlyCans - Report Trash Can Fullness</title>
+    <link href="https://fonts.googleapis.com/css2?family=Alegreya+Sans:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Leaflet.js CSS link-->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Alegreya Sans', sans-serif;
+            background-color: #B0BEA9; 
+            color: #073B3A; 
+        }
+        header {
+            background-color: #122121;
+            color: #F49FBC;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        header img {
+            max-width: 120px;
+        }
+        h1 {
+            margin: 0;
+            font-size: 1.6em;
+        }
+        #slider {
+            background-color: #4A6C4B; 
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 1.2em;
+        }
+        nav {
+            background-color: #554348;
+            padding: 10px;
+            text-align: center;
+        }
+        nav a {
+            margin: 0 15px; 
+            color: #F49FBC;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        nav a:hover {
+            color: #B0BEA9;
+        }
+        main {
+            padding: 20px;
+            text-align: center;
+        }
+        footer {
+            background-color: #122121;
+            color: #F49FBC;
+            padding: 10px;
+            text-align: center;
+        }
+        .blank-space {
+            height: 300px;
+            background-color: #4A6C4B;
+            margin: 20px 0; 
+        }
+        #fact {
+            font-style: italic;
+            color: #073B3A;
+        }
+        #logo {
+            max-width: 240px;  
+            height: auto;
+            display: block;
+            margin: 0 -15px;
+        }
+
+        /* map container */
+        #map {
+            height: 500px;
+            width: 100%;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <img src="TheOnlyCans Logo.png" alt="OnlyCans Logo" id="logo">
+        <h1>Report Trash Can Fullness</h1>
+    </header>
+
+    <div id="slider">
+        <p id="fact">Fact 1: Recycling one ton of paper can save 17 trees.</p>
+    </div>
+
+    <nav>
+        <a href="about.html">About Us</a>
+        <a href="past-reports.html">Past Reports</a>
+        <a href="signup.html">Sign Up for Notifications</a>
+        <a href="report.html">Report</a>
+    </nav>
+
+    <main>
+        <h2>Interactive Trash & Recycling Map</h2>
+        <p>Hover over pinpoints to get more information about trash cans (blue) and recycling bins (green) near you.</p>
+
+        <!-- map container -->
+        <div id="map"></div>
+    </main>
+
+    <footer>
+        <p>© 2024 OnlyCans. All rights reserved.</p>
+    </footer>
+
+    <!-- Leaflet.js CDN -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+    <!-- map and markers -->
+    <script>
+        //initializing the map for Pittsburgh area
+        var map = L.map('map').setView([40.4456945, -79.9626408], 13); 
+
+        //adding OpenStreetMap tiles (looked up online)
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        //marker icons for trash and recycling bins
+        var blueIcon = L.icon({
+            iconUrl: 'blue-marker.png',  
+            iconSize: [25,41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34]
+        });
+
+        var greenIcon = L.icon({
+            iconUrl: 'green-marker.png',  
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34]
+        });
+
+        //our data points with trash and recycling locations
+        var locations = [
+    { lat: 40.4456945, lon: -79.9626408, recycle: false, img: 'Trash Cans/1.jpeg', id: 1 },
+    { lat: 40.4457234, lon: -79.9627632, recycle: true, img: 'Trash Cans/2.jpeg', id: 2 },
+    { lat: 40.4425995, lon: -79.9560419, recycle: false, img: 'Trash Cans/3.jpeg', id: 3 },
+    { lat: 40.4419462, lon: -79.9565498, recycle: false, img: 'Trash Cans/4.jpeg', id: 4 },
+    { lat: 40.4419909, lon: -79.9566249, recycle: false, img: 'Trash Cans/5.jpeg', id: 5 },
+    { lat: 40.4416559, lon: -79.9569753, recycle: false, img: 'Trash Cans/6.jpeg', id: 6 },
+    { lat: 40.4414591, lon: -79.9569609, recycle: false, img: 'Trash Cans/7.jpeg', id: 7 },
+    { lat: 40.4415523, lon: -79.9571325, recycle: false, img: 'Trash Cans/8.jpeg', id: 8 },
+    { lat: 40.4457897, lon: -79.9628104, recycle: false, img: 'Trash Cans/9.jpeg', id: 9 },
+    { lat: 40.4457897, lon: -79.9628104, recycle: true, img: 'Trash Cans/10.jpeg', id: 10 },
+    { lat: 40.4411754, lon: -79.9576398, recycle: false, img: 'Trash Cans/11+12.jpeg', id: 11 },
+    { lat: 40.4411754, lon: -79.9576398, recycle: true, img: 'Trash Cans/11+12.jpeg', id: 12 },
+    { lat: 40.4411141, lon: -79.9574742, recycle: false, img: 'Trash Cans/13.jpeg', id: 13 },
+    { lat: 40.4410036, lon: -79.9576304, recycle: false, img: 'Trash Cans/14.jpeg', id: 14 },
+    { lat: 40.4410937, lon: -79.9577444, recycle: false, img: 'Trash Cans/15.jpeg', id: 15 },
+    { lat: 40.4445448, lon: -79.9624983, recycle: false, img: 'Trash Cans/16.jpeg', id: 16 },
+    { lat: 40.4407964, lon: -79.9579073, recycle: false, img: 'Trash Cans/17.jpeg', id: 17 },
+    { lat: 40.4440626, lon: -79.9630149, recycle: false, img: 'Trash Cans/18.jpeg', id: 18 },
+    { lat: 40.4406732, lon: -79.9583325, recycle: false, img: 'Trash Cans/19.jpeg', id: 19 },
+    { lat: 40.4405801, lon: -79.9582161, recycle: false, img: 'Trash Cans/20.jpeg', id: 20 },
+    { lat: 40.4443402, lon: -79.9624648, recycle: false, img: 'Trash Cans/21.jpeg', id: 21 },
+    { lat: 40.4443516, lon: -79.962212, recycle: false, img: 'Trash Cans/22.jpeg', id: 22 },
+    { lat: 40.4405765, lon: -79.9584542, recycle: false, img: 'Trash Cans/23.jpeg', id: 23 },
+    { lat: 40.4443218, lon: -79.961927, recycle: false, img: 'Trash Cans/24.jpeg', id: 24 },
+    { lat: 40.4404788, lon: -79.9583486, recycle: false, img: 'Trash Cans/25.jpeg', id: 25 },
+    { lat: 40.4442927, lon: -79.9586745, recycle: false, img: 'Trash Cans/26+27.jpeg', id: 26 },
+    { lat: 40.4442927, lon: -79.9586745, recycle: true, img: 'Trash Cans/26+27.jpeg', id: 27 },
+    { lat: 40.4441588, lon: -79.9615186, recycle: false, img: 'Trash Cans/28.jpeg', id: 28 },
+    { lat: 40.444136, lon: -79.9614113, recycle: false, img: 'Trash Cans/29.jpeg', id: 29 },
+    { lat: 40.4396408, lon: -79.9595549, recycle: false, img: 'Trash Cans/30.jpeg', id: 30 },
+    { lat: 40.4397285, lon: -79.9596535, recycle: false, img: 'Trash Cans/31.jpeg', id: 31 },
+    { lat: 40.4390357, lon: -79.9603438, recycle: false, img: 'Trash Cans/32.jpeg', id: 32 },
+    { lat: 40.4440368, lon: -79.9612568, recycle: false, img: 'Trash Cans/33.jpeg', id: 33 },
+    { lat: 40.443889, lon: -79.9612363, recycle: false, img: 'Trash Cans/34.jpeg', id: 34 },
+    { lat: 40.4437148, lon: -79.961348, recycle: false, img: 'Trash Cans/35.jpeg', id: 35 },
+    { lat: 40.4404887, lon: -79.9600689, recycle: false, img: 'Trash Cans/36.jpeg', id: 36 },
+    { lat: 40.4437148, lon: -79.961348, recycle: false, img: 'Trash Cans/37.jpeg', id: 37 },
+    { lat: 40.4432973, lon: -79.9618012, recycle: false, img: 'Trash Cans/38.jpeg', id: 38 },
+    { lat: 40.4407702, lon: -79.9600333, recycle: false, img: 'Trash Cans/39.jpeg', id: 39 },
+    { lat: 40.4432726, lon: -79.9619984, recycle: false, img: 'Trash Cans/40.jpeg', id: 40 },
+    { lat: 40.4431246, lon: -79.9617117, recycle: false, img: 'Trash Cans/41.jpeg', id: 41 },
+    { lat: 40.4407031, lon: -79.9597836, recycle: false, img: 'Trash Cans/42.jpeg', id: 42 },
+    { lat: 40.4428952, lon: -79.9623883, recycle: false, img: 'Trash Cans/43.jpeg', id: 43 },
+    { lat: 40.441034, lon: -79.959636, recycle: false, img: 'Trash Cans/44.jpeg', id: 44 },
+    { lat: 40.4431083, lon: -79.9628771, recycle: false, img: 'Trash Cans/45.jpeg', id: 45 },
+    { lat: 40.4412139, lon: -79.9593524, recycle: false, img: 'Trash Cans/46.jpeg', id: 46 },
+    { lat: 40.4431455, lon: -79.962911, recycle: false, img: 'Trash Cans/47.jpeg', id: 47 },
+    { lat: 40.4411613, lon: -79.959168, recycle: false, img: 'Trash Cans/48.jpeg', id: 48 },
+    { lat: 40.4412478, lon: -79.9590446, recycle: false, img: 'Trash Cans/49.jpeg', id: 49 },
+    { lat: 40.4414201, lon: -79.9592069, recycle: false, img: 'Trash Cans/50.jpeg', id: 50 },
+    { lat: 40.4415681, lon: -79.9588927, recycle: false, img: 'Trash Cans/51.jpeg', id: 51 },
+    { lat: 40.4420636, lon: -79.9581994, recycle: false, img: 'Trash Cans/52.jpeg', id: 52 },
+    { lat: 40.4416559, lon: -79.9584837, recycle: false, img: 'Trash Cans/53+54.jpeg', id: 53 },
+    { lat: 40.4416559, lon: -79.9584837, recycle: true, img: 'Trash Cans/53+54.jpeg', id: 54 },
+    { lat: 40.4417651, lon: -79.9582768, recycle: false, img: 'Trash Cans/56.jpeg', id: 55 },
+    { lat: 40.4421075, lon: -79.9578443, recycle: false, img: 'Trash Cans/57+58.jpeg', id: 56 },
+    { lat: 40.4421075, lon: -79.9578443, recycle: true, img: 'Trash Cans/57+58.jpeg', id: 57 },
+    { lat: 40.4423412, lon: -79.9578708, recycle: false, img: 'Trash Cans/59.jpeg', id: 58 },
+    { lat: 40.4419552, lon: -79.9573394, recycle: false, img: 'Trash Cans/60.jpeg', id: 59 },
+    { lat: 40.4427536, lon: -79.9562839, recycle: false, img: 'Trash Cans/61+62.jpeg', id: 60 },
+    { lat: 40.4427536, lon: -79.9562839, recycle: true, img: 'Trash Cans/61+62.jpeg', id: 61 },
+    { lat: 40.4428291, lon: -79.9564264, recycle: false, img: 'Trash Cans/63+64.jpeg', id: 62 },
+    { lat: 40.4428291, lon: -79.9564264, recycle: true, img: 'Trash Cans/63+64.jpeg', id: 63 },
+    { lat: 40.4429296, lon: -79.9565693, recycle: false, img: 'Trash Cans/65.jpeg', id: 64 },
+    { lat: 40.4434093, lon: -79.956345, recycle: false, img: 'Trash Cans/66.jpeg', id: 65 },
+    { lat: 40.4433849, lon: -79.9560737, recycle: false, img: 'Trash Cans/67+68.jpeg', id: 66 },
+    { lat: 40.4433849, lon: -79.9560737, recycle: true, img: 'Trash Cans/67+68.jpeg', id: 67 },
+    { lat: 40.4433167, lon: -79.9558236, recycle: false, img: 'Trash Cans/69.jpeg', id: 68 },
+    { lat: 40.4438916, lon: -79.9556979, recycle: false, img: 'Trash Cans/70.jpeg', id: 69 },
+    { lat: 40.4441978, lon: -79.9549465, recycle: false, img: 'Trash Cans/71.jpeg', id: 70 },
+    { lat: 40.4559098, lon: -79.9388305, recycle: false, img: 'Trash Cans/72.jpeg', id: 71 }
+];
+
+
+        //looping through locations and add markers (looked up online)
+        locations.forEach(function(location) {
+        var marker = L.marker([location.lat, location.lon], {
+        icon: location.recycle ? greenIcon : blueIcon  
+        }).addTo(map);
+
+        //adding pop-up with image, details, and link to report the trash can (looked up online)
+        marker.bindPopup(
+        `<b>Trash Can #${location.id}</b><br>
+        <img src="${location.img}" alt="Image" style="width:100px;height:auto;"><br>
+        Recycle: ${location.recycle ? 'Yes' : 'No'}<br>
+        <a href="report.html" style="color:blue;text-decoration:underline;">Report This Can</a>`
+        );
+    });
+
+    </script>
+
+    <!-- slideshow for facts -->
+    <script>
+        const facts = [
+            "A Pennsylvania litter research study found that people litter because there isn't a conveniently placed trash can.",
+            "Roadside litter is down 54% in the past decade. There are still 50 billion pieces of litter on the ground in America.",
+            "The US creates over 624,000 metric tons of waste per day.",
+            "Plastic wastage is growing at an annual rate of 9%",
+            "Of the 38 million tons of plastic waste in the U.S. every year, only 5-6% gets recycled. "
+        ];
+
+        let currentFact = 0;
+
+        function showNextFact() {
+            currentFact = (currentFact + 1) % facts.length;
+            document.getElementById("fact").textContent = facts[currentFact];
+        }
+
+        setInterval(showNextFact, 3000);
+    </script>
+
+</body>
+</html>
