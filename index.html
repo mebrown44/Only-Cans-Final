@@ -85,6 +85,10 @@
             width: 100%;
             margin-top: 20px;
         }
+
+        /*.mycustompopup{
+            background-color: #B0BEA9;
+        } */
     </style>
 </head>
 <body>
@@ -120,6 +124,8 @@
     <!-- Leaflet.js CDN -->
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
+    <!-- Load In-->
+
     <!-- map and markers -->
     <script>
         //initializing the map for Pittsburgh area
@@ -131,17 +137,24 @@
         }).addTo(map);
 
         //marker icons for trash and recycling bins
-        var blueIcon = L.icon({
-            iconUrl: 'blue-marker.png',  
-            iconSize: [25,41],
-            iconAnchor: [12, 41],
+        var trashIcon = L.icon({
+            iconUrl: 'Trash-Marker.png',  
+            iconSize: [25,33],
+            iconAnchor: [12, 33],
             popupAnchor: [1, -34]
         });
 
-        var greenIcon = L.icon({
-            iconUrl: 'green-marker.png',  
-            iconSize: [25, 41],
-            iconAnchor: [12, 41],
+        var doubleIcon = L.icon({
+            iconUrl: 'Double-Marker.png',  
+            iconSize: [25, 31],
+            iconAnchor: [12, 31],
+            popupAnchor: [1, -34]
+        });
+
+        var recycleIcon = L.icon({
+            iconUrl: 'Recycle-Marker.png',  
+            iconSize: [25, 30],
+            iconAnchor: [12, 30],
             popupAnchor: [1, -34]
         });
 
@@ -224,15 +237,19 @@
         //looping through locations and add markers (looked up online)
         locations.forEach(function(location) {
         var marker = L.marker([location.lat, location.lon], {
-        icon: location.recycle ? greenIcon : blueIcon  
+        icon: location.recycle ? recycleIcon : trashIcon,  
+        popup: L.popup({
+            className: ".mycustompopup"
+        })
         }).addTo(map);
+
 
         //adding pop-up with image, details, and link to report the trash can (looked up online)
         marker.bindPopup(
-        `<b>Trash Can #${location.id}</b><br>
-        <img src="${location.img}" alt="Image" style="width:100px;height:auto;"><br>
-        Recycle: ${location.recycle ? 'Yes' : 'No'}<br>
-        <a href="report.html" style="color:blue;text-decoration:underline;">Report This Can</a>`
+           `<a style="color:#122121;"> <b>Trash Can #${location.id}</b><br> </a>
+            <img src="${location.img}" alt="Image" style="width:100px;height:auto;"><br>
+            <a style="color:#122121;"> Recycle: ${location.recycle ? 'Yes' : 'No'}<br> </a>
+            <a href="report.html" style="color:#122121;text-decoration:none;">Report This Can</a>`
         );
     });
 

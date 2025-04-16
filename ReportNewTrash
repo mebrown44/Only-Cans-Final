@@ -1,0 +1,15 @@
+import java.util.*;
+import java.io.*;
+
+public class ReportNewTrash{
+    private Location loc;
+    private String photoName;
+    private Boolean recycle;
+    private Boolean isPublic;
+
+    public ReportNewTrash(){
+        Scanner in = new Scanner(System.in);
+
+        
+    }
+}
